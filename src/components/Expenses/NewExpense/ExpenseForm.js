@@ -22,6 +22,7 @@ const ExpenseForm = (props) => {
   };
   const dateChangeHandler = (event) => {
     setUserInput((prevState) => {
+      console.log(event.target.value);
       return { ...prevState, enteredDate: event.target.value };
     });
   };
@@ -30,11 +31,15 @@ const ExpenseForm = (props) => {
     event.preventDefault(); // default JS behavior
 
     const { enteredTitle, enteredAmount, enteredDate } = userInput;
+    const dateParts = enteredDate.split("-");
+    const date = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
     const expenseData = {
       title: enteredTitle,
       amount: +enteredAmount,
-      date: new Date(enteredDate),
+      date,
     };
+
+    console.log(expenseData);
 
     props.onSaveExpenseData(expenseData);
     setUserInput({ enteredTitle: "", enteredAmount: "", enteredDate: "" });
