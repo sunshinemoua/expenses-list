@@ -29,8 +29,9 @@ const ExpenseForm = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault(); // default JS behavior
-
     const { enteredTitle, enteredAmount, enteredDate } = userInput;
+    if (enteredTitle === "" || enteredAmount === "" || enteredDate === "")
+      return alert("Please fill in all input fields");
     const dateParts = enteredDate.split("-");
     const date = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
     const expenseData = {
@@ -38,8 +39,6 @@ const ExpenseForm = (props) => {
       amount: +enteredAmount,
       date,
     };
-
-    console.log(expenseData);
 
     props.onSaveExpenseData(expenseData);
     setUserInput({ enteredTitle: "", enteredAmount: "", enteredDate: "" });
